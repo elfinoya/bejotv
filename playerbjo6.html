@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>BEJO tv</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+    <script src="/assets/jwplayer-8.31.0/jwplayer.js"></script>
+    <!--<script src="//ssl.p.jwpcdn.com/player/v/8.31.0/jwplayer.js"></script>-->
+    <script src="https://cdn.peer2.network/peer2.jwplayer8.plugins.js?userid=D7PR1KP1"></script>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #vbplayer {
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            margin-bottom: 70px;
+        }
+        .jwplayer {
+            position: absolute !important;
+        }
+        .jw-button-container {
+            padding: 0 !important;
+            margin-top: -6px !important;
+            /*margin-bottom: 6px !important;*/
+        }
+        .jw-icon-rewind,.jw-settings-sharing { display: none !important;}
+        .jw-controlbar .jw-button-image {
+            max-height: 30px !important;
+        }
+        /*.jwplayer.jw-stretch-uniform .jw-media video {
+            object-fit: fill !important;
+        }*/
+        .jw-wrapper .jw-media {
+
+        }
+        .jw-logo-bottom-right, .jw-logo-bottom-left {
+            max-width: 200px;
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+        }
+        .jwplayer .jw-preview {
+            background-size: cover !important;
+        }
+    </style>
+    <style>
+        #worldcup-theme {
+            position: absolute !important;
+            display: block !important;
+            z-index: 99;
+        }
+        #worldcup-theme, .vbb-wrap {
+            z-index: 99;
+        }
+        .bet-flex {
+            max-width: 235px !important;
+        }
+        .jw-skip.jw-skippable, .jw-skip.jw-reset {
+            top: 70px;
+        }
+        .vb-bet {
+            bottom: 45px !important;
+        }
+
+        .jwplayer .jw-plugin-vast.jw-plugin {
+            bottom: 0 !important;
+        }
+        .jw-banner {
+            max-width: 40% !important;
+            /*margin-bottom: 45px !important;*/
+        }
+        .jw-vast-nonlinear-close-button {
+            /*margin-bottom: 45px !important;*/
+        }
+        iframe {
+            /*width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;*/
+        }
+        .jw-controlbar {
+            z-index: 2 !important
+        }
+    </style>
+    <!--    <link rel="stylesheet" href="/css/player-bet.css?v=1.0.3">
+        <script defer="defer" src="/js/chunk-vendors.8a4844f4.js"></script>
+        <script defer="defer" src="/js/app.bcb6f979.js"></script>-->
+    <script>
+		//jwplayer.key = 'uoW6qHjBL3KNudxKVnwa3rt5LlTakbko9e6aQ6VUyKQ='
+		jwplayer.key = '7MeMRClEneUmFoHRO3u3ypzAZXlVgNtBE2pKDw=='
+		//jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo'
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0270KCQLKM"></script>
+    <script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-0270KCQLKM');
+    </script>
+</head>
+<body>
+<div id="vbplayer"></div>
+<script>
+	//var isIOS      = /iPad|iPhone|iPod/.test(navigator.userAgent);
+	let jid        = 'vbplayer';
+	var url        = "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8";
+	var enable_p2p = true;
+	var model_id   = "null";
+	var theme_id   = "vebotv";
+	var pos        = 'rb'; //fb
+	var is_live    = 1;
+	var autoplay   = 1;
+	var c         = '03';
+
+	window.odd_page      = 'player';
+	window.can_close     = true;
+	window.odds_base_url = "https://odds.vebo.xyz/api/odds";
+	window.enable_odds   = false;
+
+	var urlParser  = new URL(window.location.href);
+	if (urlParser.searchParams.get('link')) {
+		url = urlParser.searchParams.get('link')
+	}
+
+	if (urlParser.searchParams.get('id')) {
+		model_id = urlParser.searchParams.get('id');
+	}
+	if (urlParser.searchParams.get('is_live')) {
+		is_live = urlParser.searchParams.get('is_live');
+	}
+	if (urlParser.searchParams.get('theme_id')) {
+		theme_id = urlParser.searchParams.get('theme_id')
+	}
+	if (urlParser.searchParams.get('t')) {
+		pos = urlParser.searchParams.get('t')
+	}
+	if (urlParser.searchParams.get('autoplay')) {
+		autoplay = urlParser.searchParams.get('autoplay') || 0;
+	}
+	if (urlParser.searchParams.get('c')) {
+		c = urlParser.searchParams.get('c') || '03';
+		c = c.split(",");
+		c = c[0] || '03';
+		if(!['01','02','03','04','05','06','07','08','19','20','21','22','24','26','27','28'].includes(c)) {
+			c = '03';
+        }
+	}
+	if (model_id !== null) {
+		window.enable_odds = true;
+		window.match_id    = model_id;
+	}
+
+	function youtubeParser(url){
+		let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+		let match = url.match(regExp);
+		return (match&&match[7].length==11)? match[7] : false;
+	}
+	function sel(elm, is_multi = false, parent = document) {
+		if (is_multi) {
+			return parent.querySelectorAll(elm);
+		} else {
+			return parent.querySelector(elm);
+		}
+	}
+	function makeid(length) {
+		let result = '';
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		const charactersLength = characters.length;
+		let counter = 0;
+		while (counter < length) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+			counter += 1;
+		}
+		return result;
+	}
+
+	let ban_bot = 'https://097662.com';
+	if (theme_id === 'tc') ban_bot = 'https://097662.com';
+	else if (theme_id === 'banhkhuc') ban_bot = 'https://097662.com';
+
+	function banb() {
+		let ban_class = 'jw-' + makeid(4) + '-' + makeid(5);
+		let html_bot  = `<div class="${ban_class}" style="max-height:5%;width:100%;position:absolute;bottom: 0;left:0;right:0;z-index:999;text-align:center">
+                    <a href="${ban_bot}" rel="nofollow" target="_blank" style="margin:0 auto;text-align:center;height: 100%;display: flex;justify-content: center;">
+                        <img src="https://image-eu-na-tsetsafndc.90phut.click/90link/z1920_x_60.gif" style="width:100%;max-width:1600px;object-fit: contain;height: 100%;" />
+                    </a>
+                </div>`;
+		return {
+			ban_class,
+			html_bot,
+		};
+	}
+	function initB() {
+		//console.error('initB');
+		//sel(`#${jid}`).insertAdjacentHTML('afterend', banner_bot);
+
+		//let b = banb();
+		//$(`#${jid} .jw-wrapper .jw-controls`).after(b.html_bot);
+
+		let cla         = '.jw-media.jw-reset';
+		let bn          = banb();
+		let bn_check    = bn && bn.ban_class || null;
+
+		var bannerH;
+		var controlH;
+		var addWidth;
+		let intervalAdd = null;
+		let intervalLoop = null;
+
+		intervalAdd = setInterval(() => {
+			if ($(cla).length && !$(`.${bn_check}`).length) {
+				$(cla).append(bn.html_bot);
+				bannerH  = bn && bn.ban_class ? $(`.${bn.ban_class}`).outerHeight() : 0;
+				addWidth = $(document).width() > 540 ? 8 : 4;
+				$('.jw-controlbar.jw-reset').css('bottom', bannerH);
+				//$('.jwplayer .jw-media video').css('padding-bottom', bannerH);
+				$('.jw-logo').css('margin-bottom', bannerH + addWidth);
+				clearInterval(intervalAdd);
+				return;
+			}
+		}, 1000);
+
+		intervalLoop = setInterval(() => {
+			if (!$(`.${bn_check}`).length) {
+				$(cla).append(bn.html_bot);
+			}
+
+			bannerH  = bn && bn.ban_class ? $(`.${bn.ban_class}`).outerHeight() : 0;
+			controlH = $('.jw-controlbar.jw-reset').outerHeight() || 0;
+			addWidth = $(document).width() > 540 ? 8 : 4;
+
+			$('.jw-controlbar.jw-reset').css('bottom', bannerH);
+			//$('.jwplayer .jw-media video').css('padding-bottom', bannerH);
+			$('.jw-logo').css('margin-bottom', bannerH + addWidth);
+
+
+			// if ($(`#${jid}`).hasClass('jw-flag-fullscreen')) {
+			// 	$(`#${jid} .jw-media`).attr('style', `width:100%;height:100% !important;`);
+			// }
+			// else {
+			// 	$(`#${jid} .jw-media`).attr('style', `width:100%;height:calc(100% - ${bannerH - 4}px) !important;`);
+			// }
+
+			if ($(`#${jid}`).hasClass('jw-flag-user-inactive')) {
+				$('.jw-banner').css('margin-bottom', bannerH);
+				$('.jw-vast-nonlinear-close-button').css('margin-bottom', bannerH);
+			}
+			else {
+				$('.jw-banner').css('margin-bottom', bannerH + controlH);
+				$('.jw-vast-nonlinear-close-button').css('margin-bottom', bannerH + controlH);
+			}
+		}, 1000);
+
+		/*$('body').on('click', `.${bn_check}, .${bn_check} a, .${bn_check} img`, function() {
+			clearInterval(intervalAdd);
+			clearInterval(intervalLoop);
+			$(`.${bn_check}`).remove();
+			$('.jw-controlbar.jw-reset').css('bottom', 'inherit');
+			$('.jw-banner').css('margin-bottom', 'inherit');
+		})*/
+
+	}
+	/*function initOdds() {
+		if (!window.enable_odds) {
+			return false;
+		}
+		const oddsWrapper = '#worldcup-theme';
+		let intervalAdd = setInterval(() => {
+			if ($(`${oddsWrapper}`).length !== 0 || $(`#${jid}`).length === 0) {
+				clearInterval(intervalAdd);
+				return;
+			} else {
+				$(`#${jid}`).append(`<div id="worldcup-theme" class="position-absolute d-block vb-bet"></div>`)
+				if (window.odds_run) {
+					window.odds_run();
+				}
+			}
+		}, 1000);
+	}*/
+	function buildStreamID(url, model_id) {
+		const urlParser = new URL(url);
+		return `${model_id}_${urlParser.pathname}`;
+	}
+
+	let logo_position = 'bottom-right';
+	if (pos === 'l' || pos === 'bl') {
+		logo_position = 'bottom-left'
+	}
+	if (pos === 'r' || pos === 'br') {
+		logo_position = 'bottom-right'
+	}
+	else if (pos === 'tl') {
+		logo_position = 'top-left'
+	}
+	else if (pos === 'tr') {
+		logo_position = 'top-right'
+	}
+
+	let preroll          = `/avz/df/pr_${c}.xml?v=1.0`;
+	let logo             = {
+		hide    : false,
+		//file    : 'https://i.imgur.com/XF0aGfI.gif',
+		file    : atob('aHR0cHM6Ly9pLmltZ3VyLmNvbS9YRjBhR2ZJLmdpZg'),
+		link    : 'https://vebo.bet',
+		margin  : '5',
+		position: logo_position,
+	};
+	let advertising      = {
+		withCredentials : false,
+		admessage       : 'Quảng cáo sẽ tự động đóng sau xx giây',
+		autoplayadsmuted: false,
+		client          : 'vast',
+		cuetext         : 'Quảng cáo',
+		preloadAds      : true,
+		rules           : {
+			startOnSeek   : 'none',
+			timeBetweenAds: 60,
+		},
+		skipmessage     : 'Có thể bỏ qua sau xx giây',
+		vpaidcontrols   : true,
+		vpaidmode       : 'insecure',
+	};
+	advertising.schedule = [
+		{
+			offset    : 'pre',
+			skipoffset: 1,
+			tag       : [preroll],
+			type      : 'linear',
+		},
+		{
+			offset    : 10,
+			skipoffset: 30,
+			tag       : ['/avz/df/overlay.xml?v=1.0'],
+			type      : 'nonlinear',
+		},
+		{
+			offset    : '00:03:00',
+			skipoffset: 30,
+			tag       : ['/avz/df/overlay.xml?v=1.0'],
+			type      : 'nonlinear',
+		},
+		{
+			offset    : '00:10:00',
+			skipoffset: 30,
+			tag       : ['/avz/df/overlay.xml?v=1.0'],
+			type      : 'nonlinear',
+		},
+	];
+
+	if (is_live != 1) {
+		logo        = {};
+		advertising = {};
+	}
+	else if (theme_id === "vebotv") {
+		preroll              = `/avz/df/pr_${c}.xml?v=1.0`;
+		logo                 = {
+			file    : "https://image-eu-na-tsetsafndc.90phut.click/90link/VTM_327_x_160.gif",
+			hide    : false,
+			link    : ban_bot,
+			margin  : "5",
+			position: logo_position,
+		};
+		advertising.schedule = [
+			{
+				offset    : 'pre',
+				skipoffset: 1,
+				tag       : [preroll],
+				type      : 'linear',
+			},
+			{
+				offset    : 10,
+				skipoffset: 30,
+				tag       : ['/avz/vb/10s.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:03:00',
+				skipoffset: 30,
+				tag       : ['/avz/vb/3m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:10:00',
+				skipoffset: 30,
+				tag       : ['/avz/vb/10m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:60:00',
+				skipoffset: 30,
+				tag       : ['/avz/vb/60m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:70:00',
+				skipoffset: 30,
+				tag       : ['/avz/vb/70m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+		]
+	}
+	else if (theme_id === "xoilac") {
+		preroll              = '/avz/xl/pr.xml?v=1.0';
+		logo                 = {
+			file    : "https://image-eu-na-tsetsafndc.90phut.click/90link/VTM_327_x_160.gif",
+			hide    : false,
+			link    : ban_bot,
+			margin  : "5",
+			position: logo_position,
+		};
+		advertising.schedule = [
+			{
+				offset    : 'pre',
+				skipoffset: 1,
+				tag       : [preroll],
+				type      : 'linear',
+			},
+			{
+				offset    : 10,
+				skipoffset: 30,
+				tag       : ['/avz/xl/10s.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:03:00',
+				skipoffset: 30,
+				tag       : ['/avz/xl/3m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:10:00',
+				skipoffset: 30,
+				tag       : ['/avz/xl/10m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:60:00',
+				skipoffset: 30,
+				tag       : ['/avz/xl/60m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:70:00',
+				skipoffset: 30,
+				tag       : ['/avz/xl/70m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+		]
+	}
+	else if (theme_id === "banhkhuc") {
+		preroll              = '/avz/bk/pr.xml?v=1.0';
+		logo                 = {
+			file    : "https://image-eu-na-tsetsafndc.90phut.click/90link/VTM_327_x_160.gif",
+			hide    : false,
+			link    : ban_bot,
+			margin  : "5",
+			position: logo_position,
+		};
+		advertising.schedule = [
+			{
+				offset    : 'pre',
+				skipoffset: 1,
+				tag       : [preroll],
+				type      : 'linear',
+			},
+			{
+				offset    : 10,
+				skipoffset: 30,
+				tag       : ['/avz/bk/10s.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:03:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/3m.xml?v=1.0',],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:10:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/10m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:60:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/60m.xml?v=1.0',],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:70:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/70m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+		]
+	}
+	else if (theme_id === "banhkhuc") {
+		preroll              = '/avz/bk/pr.xml?v=1.0';
+		logo                 = {
+			file    : "https://image-eu-na-tsetsafndc.90phut.click/90link/VTM_327_x_160.gif",
+			hide    : false,
+			link    : ban_bot,
+			margin  : "5",
+			position: logo_position,
+		};
+		advertising.schedule = [
+			{
+				offset    : 'pre',
+				skipoffset: 1,
+				tag       : [preroll],
+				type      : 'linear',
+			},
+			{
+				offset    : 10,
+				skipoffset: 30,
+				tag       : ['/avz/bk/10s.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:03:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/3m.xml?v=1.0',],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:10:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/10m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:60:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/60m.xml?v=1.0',],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:70:00',
+				skipoffset: 30,
+				tag       : ['/avz/bk/70m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+		]
+	}
+	else if (theme_id.includes('mitom')) {
+		preroll              = '/avz/mt/pr.xml?v=1.0';
+		logo                 = {
+			file    : "https://image-eu-na-tsetsafndc.90phut.click/90link/VTM_327_x_160.gif",
+			hide    : false,
+			link    : ban_bot,
+			margin  : "5",
+			position: logo_position,
+		};
+		advertising.schedule = [
+			{
+				offset    : 'pre',
+				skipoffset: 3,
+				tag       : [preroll],
+				type      : 'linear',
+			},
+			{
+				offset    : 10,
+				skipoffset: 30,
+				tag       : ['/avz/mt/10s.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:03:00',
+				skipoffset: 30,
+				tag       : ['/avz/mt/3m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:10:00',
+				skipoffset: 30,
+				tag       : ['/avz/mt/10m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:60:00',
+				skipoffset: 30,
+				tag       : ['/avz/mt/60m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+			{
+				offset    : '00:70:00',
+				skipoffset: 30,
+				tag       : ['/avz/mt/70m.xml?v=1.0'],
+				type      : 'nonlinear',
+			},
+		]
+	}
+	else if (theme_id === "tc") {
+		preroll              = "/avz/tc/pr.xml?v=1.0";
+		logo                 = {
+			file    : "https://image-eu-na-tsetsafndc.90phut.click/90link/VTM_327_x_160.gif",
+			hide    : false,
+			link    : ban_bot,
+			margin  : "5",
+			position: logo_position,
+		};
+		advertising.schedule = [
+			{
+				offset    : 'pre',
+				skipoffset: 1,
+				tag       : [preroll],
+				type      : 'linear',
+			},
+		]
+	}
+
+
+
+	let yt_id = youtubeParser(url);
+	if (!yt_id) {
+		var player = jwplayer(jid);
+		let conf = {
+			image: 'https://xem.bdhub.xyz/assets/bg.jpg',
+			sources    : [{file: url}],
+			swarmId    : buildStreamID(url, model_id),
+			autostart  : false,
+			advertising: advertising,
+			logo       : logo,
+			cast       : {},
+			sharing: false,
+			//"aspectratio": "16:9",
+			//"stretching": "fill",
+			//floating: {"dismissible": true, "mode": 'notVisible'},
+			preload: "auto",
+			width  : "100%",
+			height : "100%",
+			abouttext: 'VEBO.TV | XOILAC.TV | THAPCAM.TV',
+			aboutlink: 'https://bit.ly/tiengruoi',
+			withCredentials: false,
+			stretching     : "uniform",
+			floating       : {
+				"dismissible": true,
+				"mode"       : 'notVisible',
+			},
+			//allowFullscreen: true,
+			//renderCaptionsNatively: false,
+			//captions              : false,
+			//primary        : "html5",
+			//sharing        : {},
+			//stretching : 'exactfit',
+			//aspectratio: "16:9",
+			//sharing: {"sites": ["reddit", "facebook", "twitter"]},
+
+		}
+
+		$(function () {
+			let mypeer;
+			setTimeout(() => {
+				let playerInstance = player.setup(conf);
+				if(enable_p2p){
+					mypeer =  new PEER2(player);
+				}
+				playerInstance.once('ready', function (evt) {
+
+					player.addButton(
+						"/img/cuoc-ngay.gif",
+						"ĐẶT CƯỢC UY TÍN",
+						function () {
+							window.open('https://vebo.bet/banner', '_blank')
+						},
+						"be"
+					);
+
+					if (is_live == 1) {
+						// console.error('zzz');
+						// initB();
+					}
+					else {
+						function jumpBySeconds(seksToJump) {
+							var time = player.getPosition() + seksToJump;
+							if (time < 0) {
+								time = 0;
+							}
+							player.seek(time);
+						}
+						player.addButton(
+							"/img/forward.svg",
+							"+10s",
+							function () {
+								jumpBySeconds(10)
+							},
+							"forward"
+						);
+						player.addButton(
+							"/img/rewind.svg",
+							"-10s",
+							function () {
+								jumpBySeconds(-10)
+							},
+							"rewind"
+						);
+					}
+				});
+			}, 100)
+		})
+		$(function () {
+			initB();
+		})
+
+	}
+	else {
+		document.getElementById('vbplayer').style.marginBottom = '0';
+		document.getElementById('vbplayer').innerHTML = (`<iframe id="z" style="height: 100vh" width="100%" height="100%" src="https://www.youtube.com/embed/${yt_id}?autoplay=${autoplay}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
+	}
+
+</script>
+</body>
+</html>
