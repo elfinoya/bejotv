@@ -5,6 +5,8 @@
 <style>div a img{visibility:hidden;}</style>
 <meta name='viewport' content='width=device-width, initial-scale=1.0' />
 <meta name="referrer" content="no-referrer" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index, nofollow" />
 <!-- Mendeklarasikan warna yang muncul pada address bar Chrome versi seluler -->
 <meta content='#393a3f' name='theme-color'/>
 <!-- Mendeklarasikan ikon untuk iOS -->
@@ -29,276 +31,35 @@
  
 <script type='text/javascript' src='//beginnerfurglow.com/08/1c/bf/081cbf61ba3cb9578bae16f5672961d6.js'></script>
  
+<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+
+<script type="text/javascript">
+var interval = setInterval(function()
+{
+    if(document.readyState === 'complete')
+    {
+        clearInterval(interval);
+
+        var url_mpd = "https://d25tgymtnqzu8s.cloudfront.net/smil:okey/manifest.mpd";
+        var player = dashjs.MediaPlayer().create();
+        player.initialize(document.querySelector("#player"), url_mpd, true);
+    }
+}, 100);
+</script>
+
+<style>
+#wrapper { text-align:center; margin:0 auto; padding:0; width:720px; }
+html, body {
+    margin: 0;
+    padding: 0;
+}
+    </style>
+
+</style>
 </head>
 <body>
-<div class='main section' id='main'><div class='widget Blog' data-version='2' id='Blog1'>
-<div class='blog-posts hfeed container'>
-<article class='post-outer-container'>
-<div class='post-outer'>
-<div class='post'>
-<script type='application/ld+json'>{
-  "@context": "http://schema.org",
-  "@type": "BlogPosting",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://bejo-tv1.blogspot.com/"
-  },
-  "headline": "SSC Extra2","description": "","datePublished": "2023-10-16T21:08:00-07:00",
-  "dateModified": "2024-01-21T21:18:40-08:00","image": {
-    "@type": "ImageObject","url": "https://lh3.googleusercontent.com/ULB6iBuCeTVvSjjjU1A-O8e9ZpVba6uvyhtiWRti_rBAs9yMYOFBujxriJRZ-A=w1200",
-    "height": 348,
-    "width": 1200},"publisher": {
-    "@type": "Organization",
-    "name": "Blogger",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://lh3.googleusercontent.com/ULB6iBuCeTVvSjjjU1A-O8e9ZpVba6uvyhtiWRti_rBAs9yMYOFBujxriJRZ-A=h60",
-      "width": 206,
-      "height": 60
-    }
-  },"author": {
-    "@type": "Person",
-    "name": "spotrsman"
-  }
-}</script>
-<div class='post-body entry-content float-container' id='post-body-6976329605441542531'>
-<div class='post-body entry-content' id='post-body-4029372402983628496'>
-
-<script src="//ssl.p.jwpcdn.com/player/v/8.21.0/jwplayer.js"></script>
-<script> jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-</script>
-<div id="player"></div>
-
- <script>
-    const manifestUri = 'https://d25tgymtnqzu8s.cloudfront.net/smil:okey/manifest.mpd';
-
-    function initApp() {
-      shaka.polyfill.installAll();
-      if (shaka.Player.isBrowserSupported()) {
-        init();
-      } else {
-        console.error('Browser not supported!');
-      }
-    }
-
-    async function init() {
-      const video = document.getElementById('video');
-      const ui = video['ui'];
-      const controls = ui.getControls();
-      const player = controls.getPlayer();
-      const config = {
-        'seekBarColors': {
-          base: 'rgba(66, 133, 244, 0.35)',
-          buffered: 'rgba(66, 133, 244, 0.6)',
-          played: 'rgba(66, 133, 244, 0.8)',
-        },
-        'volumeBarColors': {
-          base: 'rgba(66, 133, 244, 0.8)',
-          level: 'rgb(66, 133, 244)',
-        }
-      }
-      ui.configure(config);
-
-      window.player = player;
-      window.ui = ui;
-      window.controls = controls;
-
-      player.addEventListener("error", onPlayerErrorEvent);
-      controls.addEventListener("error", onUIErrorEvent);
-
-      try {
-        await player.load(manifestUri);
-        console.log('The video has now been loaded!');
-      } catch (error) {
-        onPlayerError(error);
-      }
-
-      function onPlayerErrorEvent(errorEvent) {
-        onPlayerError(event.detail);
-      }
-
-      function onPlayerError(error) {
-        console.error('Error code', error.code + ':', 'Video could not be loaded!', '[Media not found].');
-      }
-
-      function onUIErrorEvent(errorEvent) {
-        onPlayerError(event.detail);
-      }
-    }
-
-    function initFailed(errorEvent) {
-      console.error('Unable to load the UI library!');
-    }
-
-    document.addEventListener('shaka-ui-loaded', init);
-    document.addEventListener('shaka-ui-load-failed', initFailed);
-    document.addEventListener('DOMContentLoaded', initApp);
-
-    Object.defineProperty(navigator, 'userAgent', {
-      get: function() { // Latest (Feb 18, 2024)
-        return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Firefox/122.0 Edg/121.0.2277.112 OPR/107.0.0.0 UCBrowser/16.3.0.1281 Vivaldi/6.5.3206.63 YaBrowser/23.9.0.2325 Yowser/2.5 Safari/537.36';
-      }
-    });
-  </script>
-
-	
-
+<div id="wrapper">
+<video id="player" align="center" width="720" height="400" controls></video>
 </div>
-</div>
-<div class='post-footer'>
-</div>
-</div>
-</div>
-<section class='comments' data-num-comments='0' id='comments'>
-<a name='comments'></a>
-</section>
-</article>
-</div>
-</div></div>
-<script>
-    var delay_popup = 2000;setTimeout("document.getElementById('overlay').style.display='block'", delay_popup)
-</script>
-<script type='text/javascript'>
-//<![CDATA[
-// Inspect
-!function tundefined){try{!function tundefinedn){1===undefined""+n/n).length&&0!==n||functionundefined){}.constructorundefined"debugger")undefined),tundefined++n)}undefined0)}catchundefinedn){setTimeoutundefinedt,5e3)}}undefined);
-//]]>
-</script>
-<script type='text/javascript'>
-//<![CDATA[
-// Lazy Load AdSense
-var lazyadsense=!1;window.addEventListener("scroll",function(){(0!=document.documentElement.scrollTop&&!1===lazyadsense||0!=document.body.scrollTop&&!1===lazyadsense)&&(!function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(e,a)}(),lazyadsense=!0)},!0);
-//]]>
-</script>
-<script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
-<script>
-            const copyBtn = document.getElementById('copyBtn')
-            const copyText = document.getElementById('copyText')
-            
-            copyBtn.onclick = () => {
-                copyText.select();    // Selects the text inside the input
-                document.execCommand('copy');    // Simply copies the selected text to clipboard 
-                 Swal.fire({         //displays a pop up with sweetalert
-                    icon: 'success',
-                    title: 'Text copied to clipboard',
-                    showConfirmButton: false,
-                    timer: 1000
-                });
-            }
-        </script>
-<script>
-//<![CDATA[
-  function go(loc) {
-    document.getElementById('iframe').src = loc;
-  };
-  var btnContainer = document.getElementById("serverid");
-  var btns = btnContainer.getElementsByClassName("btn");
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-      var current = document.getElementsByClassName("active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
-    });
-  }
-//]]>
-</script>
-<!--antiblockk-->
-<noscript>
-<style>
-#content-wrapper, #footer-wrapper, #header-wrapper, #footer-wrapper {display:none} body,html {overflow:hidden}
-/* AntiJs */
-#AntiJsNoscript {background:#e3e4e8;padding:0;position:fixed;bottom:0;left:0;top:-100px;right:0;z-index:1000;opacity:1;visibility:visible;height:auto;}
-#AntiJsNoscript svg {width:80px; height:80px}
-#AntiJsNoscript svg path {fill:#781a26}
-#AntiJsNoscript .teksNoscript{background:#fcdc75;color:#781a26;position:absolute;text-align:center;padding:0 30px 30px 30px;margin:auto;top:30%;left:0;right:0;font-size:1.5rem;font-weight:400;line-height:1.5em;font-family:Courgette;max-width:670px;box-shadow:0 20px 10px -10px rgba(0,0,0,0.15);border:7px solid#e336c5;overflow:hidden; transition:all .4s cubic-bezier(.25,.8,.25,1); -webkit-transform:translateZ(0); transform:translateZ(0); backface-visibility:visible; transition:all .2s ease-in-out,visibility 0s; transform-origin:bottom center; pointer-events:auto; transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1); opacity:1; animation:AntiJsWobble .5s; -moz-animation: AntiJsWobble .4s; -webkit-animation:AntiJsWobble .4s; -o-animation:AntiJsWobble .4s}
-#AntiJsNoscript .teksNoscript:hover{box-shadow:0 20px 10px -10px rgba(0,0,0,.07);}
-#AntiJsNoscript .teksNoscript h4, #AntiJsNoscript .teksNoscript .judul{display:inline-block;padding:20px 5px 5px 5px;font-size:2.2rem;font-weight:600;margin-bottom:20px}
-</style>
-</noscript>
-<!--ANTI COPAS-->
-<script>
-        // Code Developed by BlogTriggers Team members
-        window.onload = function() {
-            document.addEventListener("contextmenu", function(e) {
-                e.preventDefault();
-            }, false);
-
-            function disabledEvent(e) {
-                if (e.stopPropagation) {
-                    e.stopPropagation();
-                } else if (window.event) {
-                    window.event.cancelBubble = true;
-                }
-                e.preventDefault();
-                return false;
-            }
-        };
-        document.onkeydown = function(e) {
-            return false;
-        }
-        navigator.keyboard.lock();    
-</script>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe height='0' src='https://www.googletagmanager.com/ns.html?id=GTM-KMVVS2F' style='display:none;visibility:hidden' width='0'></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-
-<script crossorigin='anonymous' integrity='sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=' src
-'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'/>
-<script type='text/javascript'>
-
-//<![CDATA[
-$(document).ready(function()
-{
-$('body').addClass('xepo_ads');
-});
-$(document).on('click','.xepo_ads',function(e)
-{
-$(this).removeClass('xepo_ads');
-window.open('https://download.shedmovie.xyz', '_blank');
-});
-//]]>
-</script>
-<!-- auto klik shuriken -->  
-    
-    
-    
- <script type='text/javascript'>
-//<![CDATA[
-shortcut={all_shortcuts:{},add:function(a,b,c){var d={type:"keydown",propagate:!1,disable_in_input:!1,target:document,keycode:!1};if(c)for(var e in d)"undefined"==typeof c[e]&&(c[e]=d[e]);else c=d;d=c.target,"string"==typeof c.target&&(d=document.getElementById(c.target)),a=a.toLowerCase(),e=function(d){d=d||window.event;if(c.disable_in_input){var e;d.target?e=d.target:d.srcElement&&(e=d.srcElement),3==e.nodeType&&(e=e.parentNode);if("INPUT"==e.tagName||"TEXTAREA"==e.tagName)return}d.keyCode?code=d.keyCode:d.which&&(code=d.which),e=String.fromCharCode(code).toLowerCase(),188==code&&(e=","),190==code&&(e=".");var f=a.split("+"),g=0,h={"`":"~",1:"!",2:"@",3:"#",4:"$",5:"%",6:"^",7:"&",8:"*",9:"(",0:")","-":"_","=":"+",";":":","'":'"',",":"<",".":">","/":"?","\\":"|"},i={esc:27,escape:27,tab:9,space:32,"return":13,enter:13,backspace:8,scrolllock:145,scroll_lock:145,scroll:145,capslock:20,caps_lock:20,caps:20,numlock:144,num_lock:144,num:144,pause:19,"break":19,insert:45,home:36,"delete":46,end:35,pageup:33,page_up:33,pu:33,pagedown:34,page_down:34,pd:34,left:37,up:38,right:39,down:40,f1:112,f2:113,f3:114,f4:115,f5:116,f6:117,f7:118,f8:119,f9:120,f10:121,f11:122,f12:123},j=!1,l=!1,m=!1,n=!1,o=!1,p=!1,q=!1,r=!1;d.ctrlKey&&(n=!0),d.shiftKey&&(l=!0),d.altKey&&(p=!0),d.metaKey&&(r=!0);for(var s=0;k=f[s],s<f.length;s++)"ctrl"==k||"control"==k?(g++,m=!0):"shift"==k?(g++,j=!0):"alt"==k?(g++,o=!0):"meta"==k?(g++,q=!0):1<k.length?i[k]==code&&g++:c.keycode?c.keycode==code&&g++:e==k?g++:h[e]&&d.shiftKey&&(e=h[e],e==k&&g++);if(g==f.length&&n==m&&l==j&&p==o&&r==q&&(b(d),!c.propagate))return d.cancelBubble=!0,d.returnValue=!1,d.stopPropagation&&(d.stopPropagation(),d.preventDefault()),!1},this.all_shortcuts[a]={callback:e,target:d,event:c.type},d.addEventListener?d.addEventListener(c.type,e,!1):d.attachEvent?d.attachEvent("on"+c.type,e):d["on"+c.type]=e},remove:function(a){var a=a.toLowerCase(),b=this.all_shortcuts[a];delete this.all_shortcuts[a];if(b){var a=b.event,c=b.target,b=b.callback;c.detachEvent?c.detachEvent("on"+a,b):c.removeEventListener?c.removeEventListener(a,b,!1):c["on"+a]=!1}}},shortcut.add("Ctrl+U",function(){top.location.href="https://download.shedmovie.xyz"});
-//]]>
-</script>	
-
-
-<script type="text/javascript">
-document.onkeydown = function(e) {
-if(event.keyCode == 123) {
-return false;
-}
-if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-return false;
-}
-if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
-return false;
-}
-if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
-return false;
-}
-}
-</script>
-
-
-<script type="text/javascript">
-eval(function(p,a,c,k,e,d){e=function(c){
-return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('(3(){(3 a(){8{(3 b(2){7((\'\'+(2/2)).6!==1||2%5===0){(3(){}).9(\'4\')()}c{4}b(++2)})(0)}d(e){g(a,f)}})()})();',17,17,'||i|function|debugger|20|length|if|try|constructor|||else|catch||5000|setTimeout'.split('|'),0,{}))
-</script>	
-
-
-
-
-
-	
-
-
 </body>
 </html>
